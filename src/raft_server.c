@@ -21,8 +21,8 @@
 #include "raft_log.h"
 #include "raft_private.h"
 
-#define min(a, b) ((a) < (b) ? (a) : (b))
-#define max(a, b) ((a) < (b) ? (b) : (a))
+//#define min(a, b) ((a) < (b) ? (a) : (b))
+//#define max(a, b) ((a) < (b) ? (b) : (a))
 
 static void __log(raft_server_t *me_, raft_node_t* node, const char *fmt, ...)
 {
@@ -31,7 +31,8 @@ static void __log(raft_server_t *me_, raft_node_t* node, const char *fmt, ...)
     va_list args;
 
     va_start(args, fmt);
-    vsprintf(buf, fmt, args);
+    //vsprintf(buf, fmt, args);
+	vsnprintf(buf, sizeof(buf), fmt, args);
 
     if (me->cb.log)
         me->cb.log(me_, node, me->udata, buf);
@@ -641,7 +642,7 @@ int raft_send_appendentries(raft_server_t* me_, raft_node_t* node)
     if (!(me->cb.send_appendentries))
         return -1;
 
-    msg_appendentries_t ae = {};
+	msg_appendentries_t ae;// = {};
     ae.term = me->current_term;
     ae.leader_commit = raft_get_commit_idx(me_);
     ae.prev_log_idx = 0;
