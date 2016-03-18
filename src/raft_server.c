@@ -21,8 +21,8 @@
 #include "raft_log.h"
 #include "raft_private.h"
 
-//#define min(a, b) ((a) < (b) ? (a) : (b))
-//#define max(a, b) ((a) < (b) ? (b) : (a))
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define max(a, b) ((a) < (b) ? (b) : (a))
 
 static void __log(raft_server_t *me_, raft_node_t* node, const char *fmt, ...)
 {
